@@ -22,16 +22,27 @@ export default function Home() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted:', formData);
-    // Reset form after submission
+
+    // Create email content
+    const subject = `Contact Form Submission from ${formData.firstName} ${formData.lastName}`;
+    const body = `
+    Name: ${formData.firstName} ${formData.lastName}
+    Email: ${formData.email}
+    Message:${formData.message}`;
+
+    // Create mailto URL with encoded parameters
+    const mailtoUrl = `mailto:vinayakbora09@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // Open default email client
+    window.location.href = mailtoUrl;
+
+    // Reset form
     setFormData({
       firstName: '',
       lastName: '',
       email: '',
       message: ''
     });
-    alert('Thank you for your message. We will get back to you shortly!');
   };
   return (
     <div className="min-h-screen bg-gray-100">
@@ -42,7 +53,7 @@ export default function Home() {
           {/* Background Image with padding effect */}
           <div className="absolute inset-0 z-0">
             <Image
-              src="/images/london.jpg"
+              src="/images/londonskyline.jpg"
               alt="London skyline view"
               fill
               priority
