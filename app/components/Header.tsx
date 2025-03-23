@@ -3,12 +3,19 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
+import { Marcellus } from 'next/font/google'
+
+const marcellus = Marcellus({ 
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="py-6 px-8 bg-gray-100">
+    <header className={`py-6 px-8 bg-gray-100 ${marcellus.className}`}>
       <div className="flex justify-between items-center relative">
         <Link href="/" className="text-2xl font-medium text-gray-900">
           <Image
@@ -22,7 +29,7 @@ export default function Header() {
 
         {/* Large QUASARR text (only visible on desktop) */}
         <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2">
-          <h1 className="text-4xl font-bold text-gray-900">QUASARR</h1>
+          <h1 className="text-6xl font-bold text-gray-900">QUASARR LTD</h1>
         </div>
 
         {/* Desktop Navigation */}

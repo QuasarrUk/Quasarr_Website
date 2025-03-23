@@ -1,4 +1,18 @@
 import Image from 'next/image'
+import { Marcellus } from 'next/font/google'
+import { PT_Serif } from 'next/font/google'
+
+const marcellus = Marcellus({ 
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const ptSerif = PT_Serif({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function Footer() {
   return (
@@ -16,14 +30,14 @@ export default function Footer() {
           </div>
           
           <div>
-            <h3 className="text-xl font-medium text-gray-800 mb-4">Location</h3>
-            <p className="text-gray-700">The United Kingdom</p>
+            <h3 className={`text-3xl font-bold text-gray-800 mb-4 ${marcellus.className}`}>Location</h3>
+            <p className={`text-gray-700 ${ptSerif.className}`}>The United Kingdom</p>
           </div>
           
           <div>
-            <h3 className="text-xl font-medium text-gray-800 mb-4">Contact</h3>
-            <p className="text-gray-700 mb-2">quasarltd.uk222@gmail.com</p>
-            <p className="text-gray-700 font-medium">(+44) 7543490835</p>
+            <h3 className={`text-3xl font-bold text-gray-800 mb-4 ${marcellus.className}`}>Contact</h3>
+            <p className={`text-gray-700 mb-2 ${ptSerif.className}`}>quasarltd.uk222@gmail.com</p>
+            <p className={`text-gray-700 font-medium ${ptSerif.className}`}>(+44) 7543490835</p>
           </div>
         </div>
       </div>

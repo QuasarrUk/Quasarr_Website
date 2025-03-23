@@ -3,6 +3,20 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, ChangeEvent, FormEvent } from 'react'
+import { Marcellus } from 'next/font/google'
+import { PT_Serif } from 'next/font/google'
+
+const marcellus = Marcellus({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const ptSerif = PT_Serif({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function Home() {
 
@@ -51,7 +65,7 @@ export default function Home() {
         {/* Container with padding that will hold the background image */}
         <div className="relative rounded-2xl overflow-hidden">
           {/* Background Image with padding effect */}
-          <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 opacity-90 z-0">
             <Image
               src="/images/londonskyline.jpg"
               alt="London skyline view"
@@ -60,13 +74,15 @@ export default function Home() {
               className="object-cover"
             />
             {/* Overlay to ensure text is readable */}
-            <div className="absolute inset-0 bg-black/30"></div>
+            <div className="absolute inset-0 bg-black/60"></div>
           </div>
 
           <div className="relative z-10 mx-auto px-6 py-24">
             <div className="max-w-3xl mx-auto text-center pt-16 pb-16">
-              <h1 className="text-5xl font-bold mb-8 leading-tight">Elevating Global Trade Excellence</h1>
-              <div className="flex flex-wrap justify-center gap-6">
+              <h1 className={`text-5xl font-bold mb-8 leading-tight ${marcellus.className}`}>
+                Elevating Global Trade Excellence
+              </h1>
+              <div className={`flex flex-wrap justify-center gap-6 ${ptSerif.className}`}>
                 <Link href="/book-now" className="bg-white text-blue-600 px-10 py-4 rounded-full font-semibold hover:bg-blue-50 transition-colors">
                   Get Started
                 </Link>
@@ -84,11 +100,15 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="md:w-1/2">
-              <h2 className="text-3xl font-bold mb-6 text-gray-800">Reserve An Appointment</h2>
-              <p className="text-lg text-gray-600 mb-8">Experience the epitome of refinement in international trade by booking a personalized
+              <h2 className={`text-3xl font-bold mb-6 text-gray-800 ${marcellus.className}`}>
+                Reserve An Appointment
+              </h2>
+              <p className={`text-lg text-gray-600 mb-8 ${ptSerif.className}`}>
+                Experience the epitome of refinement in international trade by booking a personalized
                 consultation with our experts. Let us guide you through a seamless import and export journey, tailor-made to uphold the highest
-                standards of excellence. </p>
-              <Link href="/book-now" className="text-blue-600 font-semibold hover:text-blue-800">
+                standards of excellence.
+              </p>
+              <Link href="/book-now" className={`text-blue-600 font-semibold hover:text-blue-800 ${ptSerif.className}`}>
                 Explore our services →
               </Link>
             </div>
@@ -110,14 +130,16 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information Section */}
             <div>
-              <h1 className="text-5xl font-medium text-gray-800 mb-8">Contact Us</h1>
+              <h1 className={`text-5xl font-medium text-gray-800 mb-8 ${marcellus.className}`}>
+                Contact Us
+              </h1>
 
-              <p className="text-gray-700 mb-8">
+              <p className={`text-gray-700 mb-8 ${ptSerif.className}`}>
                 Eager to explore a collaboration? Kindly share your details, and we will reach out
                 to you promptly. We look forward to the opportunity to connect.
               </p>
 
-              <div className="mb-8">
+              <div className={`mb-8 ${ptSerif.className}`}>
                 <p className="text-gray-700">quasarltd.uk222@gmail.com</p>
                 <p className="text-gray-700">(+44) 7543490835</p>
               </div>
@@ -125,7 +147,7 @@ export default function Home() {
 
             {/* Form Section */}
             <div>
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} className={ptSerif.className}>
                 <div className="mb-6">
                   <label htmlFor="name" className="block text-black mb-2">Name <span className="text-black">(required)</span></label>
                   <div className="flex gap-4">

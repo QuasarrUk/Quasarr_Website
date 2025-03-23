@@ -2,6 +2,20 @@
 
 import Link from 'next/link'
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { Marcellus } from 'next/font/google'
+import { PT_Serif } from 'next/font/google'
+
+const marcellus = Marcellus({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
+const ptSerif = PT_Serif({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export default function BookNow() {
   const pricingOptions = [
@@ -128,12 +142,12 @@ export default function BookNow() {
   return (
     <div className="min-h-screen bg-gray-100 text-black px-4 py-8">
       <main className="max-w-2xl mx-auto pt-16 pb-24">
-        <h1 className="text-4xl font-bold mb-12 text-center">Book a Consultation</h1>
+        <h1 className={`text-4xl font-bold mb-12 text-center ${marcellus.className}`}>Book a Consultation</h1>
 
         {/* Pricing Section */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold mb-8 text-center">Pricing Options</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 className={`text-2xl font-semibold mb-8 text-center ${marcellus.className}`}>Pricing Options</h2>
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 ${ptSerif.className}`}>
             {pricingOptions.map((option) => (
               <div
                 key={option.id}
@@ -173,7 +187,7 @@ export default function BookNow() {
         </section>
 
         {/* Booking Form */}
-        <form id="booking-form" className="space-y-8" onSubmit={handleSubmit}>
+        <form id="booking-form" className={`space-y-8 ${ptSerif.className}`} onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name" className="block text-sm font-medium mb-2 text-black">Full Name</label>
             <input
