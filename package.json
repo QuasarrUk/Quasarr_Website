@@ -10,13 +10,17 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@square/web-sdk": "^2.1.0",
     "@types/react-datepicker": "^6.2.0",
     "date-fns": "^4.1.0",
     "next": "15.2.3",
-    "react": "^19.0.0",
+    "react": "^18.2.0",
     "react-datepicker": "^8.2.1",
-    "react-dom": "^19.0.0",
-    "react-hook-form": "^7.54.2"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.54.2",
+    "react-square-web-payments-sdk": "^3.2.4-beta.1",
+    "resend": "^4.2.0",
+    "square": "^42.0.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

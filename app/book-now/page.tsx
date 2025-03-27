@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { Marcellus } from 'next/font/google'
 import { PT_Serif } from 'next/font/google'
+import SquarePaymentForm from "../components/SquarePaymentForm";
 
 const marcellus = Marcellus({
   weight: '400',
@@ -107,27 +108,23 @@ export default function BookNow() {
     document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  // Add new state for payment status
+  const [paymentStatus, setPaymentStatus] = useState<'pending' | 'success' | 'error'>('pending');
+  const [paymentError, setPaymentError] = useState<string>('');
 
-    // Create email content
-    const subject = `Booking Form Submission from ${formData.name}`;
-    const body = `
-    Name: ${formData.name}
-    Email: ${formData.email}
-    Phone: ${formData.phone}
-    Date: ${formData.date}
-    Time: ${formData.time}
-    Selected Package: ${formData.pricing}
-    Message: ${formData.message}`;
+  // Calculate amount based on selected package
+  const getAmountInCents = () => {
+    if (formData.pricing.includes('Half Hour')) {
+      return 5000; // £50.00
+    } else if (formData.pricing.includes('One Hour')) {
+      return 10000; // £100.00
+    }
+    return 0;
+  };
 
-    // Create mailto URL with encoded parameters
-    const mailtoUrl = `mailto:vinayakbora09@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-    // Open default email client
-    window.location.href = mailtoUrl;
-
-    // Reset form
+  const handlePaymentSuccess = () => {
+    console.log('Payment success handler called');
+    // Clear the form
     setFormData({
       name: '',
       email: '',
@@ -137,12 +134,54 @@ export default function BookNow() {
       pricing: '',
       message: ''
     });
+    
+    // Show success message
+    setPaymentStatus('success');
+    console.log('Payment status set to success');
+    
+    // Hide success message after 5 seconds
+    setTimeout(() => {
+      setPaymentStatus('pending');
+      console.log('Payment status reset to pending');
+    }, 5000);
+  };
+
+  const handlePaymentError = (error: any) => {
+    setPaymentStatus('error');
+    setPaymentError('Payment failed. Please try again.');
+    console.error('Payment Error:', error);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Form is now just validated, payment is handled by Square component
   };
 
   return (
     <div className="min-h-screen bg-gray-100 text-black px-4 py-8">
       <main className="max-w-2xl mx-auto pt-16 pb-24">
         <h1 className={`text-4xl font-bold mb-12 text-center ${marcellus.className}`}>Book a Consultation</h1>
+
+        {/* Success Popup */}
+        {paymentStatus === 'success' && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full mx-4">
+              <h2 className="text-2xl font-bold text-green-600 mb-4">Booking Successful!</h2>
+              <p className="text-gray-700 mb-6">
+                Thank you for your booking. You will receive a confirmation email shortly.
+              </p>
+              <button
+                onClick={() => {
+                  setPaymentStatus('pending');
+                  console.log('Popup closed manually');
+                }}
+                className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-700 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Pricing Section */}
         <section className="mb-16">
@@ -304,12 +343,26 @@ export default function BookNow() {
             ></textarea>
           </div>
 
-          <button
-            type="submit"
-            className="w-full bg-gray-800 text-white py-4 px-6 rounded-md hover:bg-gray-700 transition-colors text-sm mt-6"
-          >
-            Submit Booking Request
-          </button>
+          {/* Payment Section */}
+          {formData.pricing && (
+            <div className="mt-8">
+              <h3 className="text-xl font-semibold mb-4">Payment Details</h3>
+              <div className="bg-white p-4 rounded-md shadow-sm">
+                <p className="mb-4">Amount to pay: {formData.pricing}</p>
+                <SquarePaymentForm 
+                  amount={formData.pricing.includes('Half Hour') ? 50 : 100} 
+                  formData={formData}
+                  onSuccess={handlePaymentSuccess}
+                />
+              </div>
+            </div>
+          )}
+
+          {paymentStatus === 'error' && (
+            <div className="text-red-600 text-sm mt-2">
+              {paymentError}
+            </div>
+          )}
         </form>
       </main>
     </div>
